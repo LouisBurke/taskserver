@@ -25,7 +25,7 @@ def task_func(params_json, task_file_name, task_id):
     task_object.save()
 
     with open(task_file_name, 'a') as logfile:
-        p = subprocess.run(
+        p = subprocess.call(
             task,
             stdout=logfile,
             stderr=subprocess.STDOUT

@@ -124,7 +124,7 @@ STATIC_URL = '/static/'
 
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
+        'HOST': '52.19.23.215',
         'PORT': 6379,
         'DB': 0,
         'DEFAULT_TIMEOUT': 360,

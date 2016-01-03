@@ -76,14 +76,14 @@ WSGI_APPLICATION = 'taskserver.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {    
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': ,
-        'USER' : ,
-        'PASSWORD' : ,
-        'HOST' : ,
-        'PORT' : ,
+        'NAME': os.environ['DBNAME'],
+        'USER' : os.environ['DBUSER'],
+        'PASSWORD' : os.environ['DBPASSWORD'],
+        'HOST' : os.environ['DBHOST'],
+        'PORT' : os.environ['DBPORT'],
     }
 }
 

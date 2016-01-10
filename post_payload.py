@@ -3,7 +3,7 @@ from json import dumps
 from furl import furl
 from requests import (get, post)
 
-f = furl('http://localhost:8000/')
+f = furl('http://127.0.0.1:8000')
 f.path.segments = ['tasks', 'handler']
 
 task = {
@@ -17,4 +17,4 @@ task = {
 
 resp = post(f.url, data=dumps(task))
 
-print(resp.content)
+print(resp.content.decode('utf8'))

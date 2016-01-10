@@ -23,7 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'abe#jaevek8s1_p!#bt!_0ya2go%n-0%_9&#90015$(#%_(sjv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (
+    True if os.environ.get('DEVLOCAL') == 'TRUE'
+    else False
+)
 
 ALLOWED_HOSTS = []
 
@@ -37,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_rq',
     'taskhandler'
 ]
 
@@ -76,16 +78,28 @@ WSGI_APPLICATION = 'taskserver.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['DBNAME'],
-        'USER' : os.environ['DBUSER'],
-        'PASSWORD' : os.environ['DBPASSWORD'],
-        'HOST' : os.environ['DBHOST'],
-        'PORT' : os.environ['DBPORT'],
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['LOCALDBNAME'],
+            'USER' : os.environ['LOCALDBUSER'],
+            'PASSWORD' : os.environ['LOCALDBPASSWORD'],
+            'HOST' : os.environ['LOCALDBHOST'],
+            'PORT' : os.environ['LOCALDBPORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['DBNAME'],
+            'USER' : os.environ['DBUSER'],
+            'PASSWORD' : os.environ['DBPASSWORD'],
+            'HOST' : os.environ['DBHOST'],
+            'PORT' : os.environ['DBPORT'],
+        }
+    }
 
 
 # Password validation
@@ -126,11 +140,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-RQ_QUEUES = {
-    'default': {
-        'HOST': '52.19.23.215',
-        'PORT': 6379,
-        'DB': 0,
-        'DEFAULT_TIMEOUT': 360,
-    }
-}
+# RQ_QUEUES = {
+#     'default': {
+#         'HOST': '52.19.23.215',
+#         'PORT': 6379,
+#         'DB': 0,
+#         'DEFAULT_TIMEOUT': 360,
+#     }
+# }
+
+# CELERY SETTINGS
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

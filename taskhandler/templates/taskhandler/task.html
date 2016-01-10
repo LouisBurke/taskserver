@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Tasks</title>
+    <link rel="stylesheet" href="{% static "taskhandler/bootstrap.min.css" %}">
+    <style type="text/css">
+      .container { width: 600px; clear: both; } .container input { width: 100%;
+      clear: both; } div { margin-top: 10px; }
+      
+      img { max-width: 100%; } table label { margin-left: 10px; }
+      input[type="radio"] { margin-left: 10px; }
+    </style>
+  </head>
+  
+  <body>
+    <div class="container-fluid">
+      <div class="table-responsive">
+        <table class="table table-bordered" style="width:80%">
+          <tr>
+            <th>
+              ID
+            </th>
+            <th>
+              Start Time
+            </th>
+          </tr>
+          {% for item in tasks %}
+          <tr>
+            {% for col in item %}
+            <td>
+              {{ col }}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

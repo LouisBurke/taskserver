@@ -19,19 +19,26 @@ def task_handler(request):
 
         message = str(task_id)
         status = 200
+        return HttpResponse(message, status=status)
     elif request.method == 'GET':
         tasks = Tasks.objects.all()
         task_list = list()
 
         for task in tasks:
-            task_dict = dict()
-            task_dict['task_id'] = task.task_id
-            task_dict['task_start_time'] = task.task_start_time
+            task_row = list()
+            task_row.append(task.task_id)
+            task_row.append(task.task_start_time)
+            task_list.append(task_row)
 
-        message = 'JSON Blob'
-        status = 200
+        context = {
+            'tasks': task_list
+        }
 
-    return HttpResponse(message, status=status)
+        return render(
+            request,
+            'taskhandler/task.html',
+            context
+        )
 
 
 def task_details(request):

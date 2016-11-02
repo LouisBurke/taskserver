@@ -12,7 +12,7 @@ task = {
     'environment': {
         "PATH": "/usr/local/bin/python3"
     },
-    "working_directory": "/Users/swrvedublin"
+    "working_directory": "/Users/louis"
 }
 
 resp = post(f.url, data=dumps(task))
